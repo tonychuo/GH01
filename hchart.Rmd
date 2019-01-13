@@ -1,0 +1,49 @@
+---
+title: "hchart"
+author: "Tony Chuo"
+date: "2019年1月13日"
+output: html_document
+---
+
+### Library
+```{r echo=T, message=F, cache=F, warning=F}
+rm(list=ls(all=T))
+library(highcharter)
+library(dplyr)
+library(purrr)
+library(lubridate)
+library(ggplot2)
+library(broom)
+```
+
+```{r}
+#### DATAS ####
+data(diamonds, package = "ggplot2")
+data(economics_long, package = "ggplot2")
+data(economics, package = "ggplot2")
+data(txhousing, package = "ggplot2")
+```
+
+```{r}
+options(highcharter.theme = hc_theme_smpl())
+```
+
+```{r}
+#### TESTS 1 ####
+set.seed(123)
+data <- sample_n(diamonds, 300) %>% data.frame
+diamonds$color <- NULL
+
+hchart(data, "scatter", hcaes(x = carat, y = price))
+```
+
+```{r}
+hchart(data, "scatter", hcaes(x = carat, y = price, group = cut))
+```
+
+```{r}
+mpgman2 <- count(mpg, manufacturer, year)
+hchart(mpgman2, "column", hcaes(x = manufacturer, y = n, group = year))
+```
+
+
